@@ -1,454 +1,527 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SDN 2 Gayau Sakti</title>
-    <!-- AOS Animation Library -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
-    <!-- Google Fonts: Poppins & Orbitron for futuristic look -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Iconify (for icons) -->
-    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
-    <style>
-        :root {
-            --primary: #4F46E5;
-            --secondary: #2563EB;
-            --accent: #0FFFC1;
-            --text-dark: #181A20;
-            --text-light: #A3A7B1;
-            --background: #F3F4F6;
-            --background-grad: linear-gradient(135deg, #1E2746 0%, #36417B 100%);
-            --card-bg: rgba(255,255,255,0.04);
-            --glass: rgba(43,44,61,0.55);
-            --neon: 0 0 8px #0FFFC1, 0 0 16px #2563EB;
-            --neon-hover: 0 0 20px #0FFFC1, 0 0 28px #2563EB;
-            --border: rgba(255,255,255,0.20);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html, body {
-            min-height: 100%;
-        }
-
-        body {
-            font-family: 'Poppins', 'Orbitron', Arial, sans-serif;
-            background: var(--background-grad);
-            color: var(--text-dark);
-            min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* Futuristic Glow Animation */
-        @keyframes neonGlow {
-            0%,100% { box-shadow: var(--neon); }
-            50% { box-shadow: var(--neon-hover); }
-        }
-
-        .header {
-            position: relative;
-            background: linear-gradient(120deg, var(--primary) 60%, var(--secondary) 100%);
-            color: #fff;
-            text-align: center;
-            padding: 80px 20px 140px;
-            overflow: hidden;
-        }
-
-        .header::after {
-            content: '';
-            display: block;
-            position: absolute;
-            left: 0; right: 0; bottom: 0;
-            height: 120px;
-            background: url('https://www.transparenttextures.com/patterns/inspiration-geometry.png'), linear-gradient(180deg,rgba(255,255,255,0.1) 20%,transparent 100%);
-            z-index: 1;
-        }
-
-        .profile-section {
-            position: absolute;
-            top: 22px;
-            right: 32px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            background: var(--glass);
-            padding: 10px 20px;
-            border-radius: 55px;
-            box-shadow: var(--neon);
-            backdrop-filter: blur(9px);
-            z-index: 2;
-            border: 1.5px solid var(--border);
-        }
-        .profile-img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 900;
-            font-size: 1.18rem;
-            color: var(--primary);
-            box-shadow: 0 2px 8px 3px #0FFFC155;
-        }
-        .profile-actions {
-            position: relative;
-            cursor: pointer;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 700;
-            letter-spacing: 1px;
-            color: #fff;
-        }
-        .profile-menu {
-            position: absolute;
-            top: 115%;
-            right: 0;
-            background: var(--glass);
-            border-radius: 8px;
-            box-shadow: var(--neon);
-            padding: 8px 0;
-            margin-top: 8px;
-            display: none;
-            min-width: 150px;
-            border: 1.5px solid var(--border);
-        }
-        .profile-actions:hover .profile-menu {
-            display: block;
-            z-index: 10;
-        }
-        .profile-menu a {
-            display: block;
-            padding: 9px 22px;
-            color: #fff;
-            text-decoration: none;
-            font-size: 1rem;
-            transition: background 0.2s, color 0.2s;
-            border-bottom: 1px solid rgba(255,255,255,0.09);
-        }
-        .profile-menu a:last-child {
-            border-bottom: none;
-        }
-        .profile-menu a:hover {
-            background: #0FFFC1;
-            color: var(--primary);
-        }
-
-        .logo {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 18px;
-            margin-bottom: 15px;
-            position: relative;
-            z-index: 2;
-        }
-        .logo img {
-            height: 84px;
-            width: 84px;
-            border-radius: 18px;
-            box-shadow: var(--neon);
-            background: var(--card-bg);
-            transition: transform 0.25s, box-shadow 0.25s;
-            border: 2.5px solid #fff;
-            animation: neonGlow 2.5s alternate infinite;
-        }
-        .logo img:hover { transform: scale(1.07) rotate(-2deg); box-shadow: var(--neon-hover);}
-        .logo h1 {
-            font-family: 'Orbitron', 'Poppins', sans-serif;
-            font-weight: 900;
-            font-size: 2.7rem;
-            color: #fff;
-            letter-spacing: 2px;
-            text-shadow: 0 4px 40px #0FFFC1cc;
-        }
-
-        .header p {
-            margin-bottom: 8px;
-            font-size: 1.3rem;
-            color: #E0E7FF;
-            text-shadow: 0 2px 10px #0002;
-            letter-spacing: 1px;
-        }
-        .header p:last-of-type {
-            font-size: 1.05rem;
-            color: #0FFFC1;
-            margin-bottom: 0;
-            font-family: 'Orbitron', sans-serif;
-            letter-spacing: 2px;
-            text-shadow: 0 2px 18px #0FFFC1cc;
-        }
-
-        /* Animated Wave SVG Footer */
-        .waves {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 120px;
-            z-index: 2;
-            pointer-events: none;
-        }
-        /* Announcement Bar */
-        .announcement {
-            background: linear-gradient(90deg, #0FFFC1 0%, #3B82F6 100%);
-            padding: 0;
-            overflow: hidden;
-            white-space: nowrap;
-            width: 100vw;
-            margin: 0 auto;
-            box-shadow: 0 2px 12px #0FFFC144;
-        }
-        .announcement-content {
-            display: inline-block;
-            padding: 13px 0;
-            animation: scroll 22s linear infinite;
-            font-size: 1.18rem;
-            color: #191B20;
-            font-family: 'Orbitron', sans-serif;
-        }
-        .announcement-content span {
-            margin-right: 52px;
-            letter-spacing: 1.5px;
-            font-weight: 700;
-            text-shadow: 0 1px 0 #fff;
-        }
-        @keyframes scroll {
-            0% { transform: translateX(100%);}
-            100% { transform: translateX(-100%);}
-        }
-        /* Menu Section */
-        .menu {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-            gap: 36px;
-            padding: 62px 6vw 62px 6vw;
-            max-width: 1300px;
-            margin: -80px auto 0;
-            position: relative;
-            z-index: 3;
-        }
-        .menu-item {
-            background: var(--card-bg);
-            border: 1.5px solid var(--border);
-            border-radius: 21px;
-            padding: 38px 28px 31px 28px;
-            text-align: left;
-            cursor: pointer;
-            transition: transform 0.25s, box-shadow 0.25s, border 0.25s;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 2px 18px 2px #0FFFC122;
-        }
-        .menu-item:hover {
-            transform: translateY(-10px) scale(1.025) rotate(-1deg);
-            box-shadow: var(--neon-hover);
-            border: 1.5px solid #0FFFC1;
-            z-index: 2;
-        }
-        .menu-item h3 {
-            font-family: 'Orbitron', 'Poppins', sans-serif;
-            color: #0FFFC1;
-            font-size: 1.35rem;
-            margin-bottom: 12px;
-            letter-spacing: 1.5px;
-            text-shadow: 0 2px 16px #0FFFC1cc;
-            position: relative;
-            z-index: 1;
-            font-weight: 900;
-        }
-        .menu-item p {
-            color: #fff;
-            font-size: 1.01rem;
-            position: relative;
-            z-index: 1;
-            font-weight: 400;
-            letter-spacing: 0.7px;
-        }
-        /* Menu item accent backgrounds */
-        .menu-item:nth-child(1) { background: linear-gradient(130deg, #4F46E5 30%, #FCA5A5 100%); }
-        .menu-item:nth-child(2) { background: linear-gradient(130deg, #3B82F6 30%, #93C5FD 100%); }
-        .menu-item:nth-child(3) { background: linear-gradient(130deg, #10B981 20%, #86EFAC 100%); }
-        .menu-item:nth-child(4) { background: linear-gradient(130deg, #8B5CF6 25%, #C4B5FD 100%); }
-        .menu-item:nth-child(5) { background: linear-gradient(130deg, #F97316 20%, #FDBA74 100%); }
-        .menu-item:nth-child(6) { background: linear-gradient(130deg, #14B8A6 30%, #5EEAD4 100%); }
-
-        .menu-item::before {
-            content: '';
-            position: absolute;
-            top: -30px;
-            right: -30px;
-            width: 90px;
-            height: 90px;
-            background: rgba(255,255,255,0.18);
-            border-radius: 50%;
-            filter: blur(12px);
-            z-index: 0;
-        }
-        .menu-item::after {
-            content: '';
-            position: absolute;
-            bottom: -22px;
-            left: -18px;
-            width: 70px;
-            height: 70px;
-            background: rgba(255,255,255,0.11);
-            border-radius: 50%;
-            filter: blur(7px);
-            z-index: 0;
-        }
-
-        /* Neon icon in menu item */
-        .menu-item h3 .iconify {
-            font-size: 1.3em;
-            vertical-align: middle;
-            margin-right: 6px;
-            filter: drop-shadow(0 0 8px #0FFFC1) drop-shadow(0 0 12px #2563EB);
-        }
-
-        /* Footer */
-        .footer {
-            background: rgba(17, 21, 31, 0.97);
-            color: var(--text-light);
-            text-align: center;
-            padding: 32px 12px 28px 12px;
-            border-top: 2px solid #0FFFC1;
-            font-size: 1.02rem;
-            letter-spacing: 2px;
-            font-family: 'Orbitron', 'Poppins', sans-serif;
-            margin-top: 90px;
-            box-shadow: 0 -2px 22px #0FFFC144;
-        }
-
-        /* Responsive */
-        @media (max-width: 990px) {
-            .menu {grid-template-columns: 1fr 1fr;}
-            .logo h1 {font-size: 2rem;}
-            .logo img {height: 58px; width: 58px;}
-            .profile-section {top:10px; right: 10px;}
-        }
-        @media (max-width: 600px) {
-            .menu {grid-template-columns: 1fr; padding: 28px 6vw;}
-            .logo h1 {font-size: 1.2rem;}
-            .profile-section {
-                position: relative;
-                top: 0; right: 0;
-                margin: 12px auto 8px auto;
-                width: fit-content;
-                flex-direction: row;
-            }
-            .header {padding: 40px 4vw 110px;}
-        }
-
-        /* Glassmorphism effect */
-        .glassmorph {
-            background: var(--glass);
-            backdrop-filter: blur(11px);
-            border-radius: 21px;
-            border: 1.5px solid var(--border);
-            box-shadow: 0 2px 12px #0FFFC122;
-        }
-
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SDN 2 Gayau Sakti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --secondary: #06b6d4;
+      --accent: #0fffc1;
+      --background: #f3f6fd;
+      --header-bg: linear-gradient(120deg, #2563eb 60%, #06b6d4 100%);
+      --card-bg: #fff;
+      --menu-shadow: 0 4px 24px #2563eb22;
+      --hover-shadow: 0 8px 40px #2563eb44;
+      --border: #e2e8f0;
+      --footer-bg: #22223b;
+      --text-dark: #22223b;
+      --text-light: #f4f4f9;
+      --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', Arial, sans-serif;
+      background: var(--background);
+      color: var(--text-dark);
+      min-height: 100vh;
+      scroll-behavior: smooth;
+    }
+    .header {
+      background: var(--header-bg);
+      color: #fff;
+      padding: 54px 18px 38px 18px;
+      text-align: center;
+      border-radius: 0 0 32px 32px;
+      box-shadow: 0 8px 32px #2563eb33;
+      position: relative;
+      overflow: hidden;
+      animation: headerFade 1.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    @keyframes headerFade {
+      from { opacity: 0; transform: translateY(-32px);}
+      to { opacity: 1; transform: none;}
+    }
+    .school-logo {
+      width: 96px;
+      height: 96px;
+      border-radius: 18px;
+      margin: 0 auto 18px auto;
+      display: block;
+      object-fit: cover;
+      box-shadow: 0 2px 18px #0fffc188, 0 1px 1.5px #fff;
+      border: 3px solid #f4f4f9;
+      background: #f3f4f6;
+      transition: transform var(--transition), box-shadow var(--transition);
+      will-change: transform;
+    }
+    .school-logo:hover {
+      transform: scale(1.08) rotate(-2deg);
+      box-shadow: 0 8px 32px #0fffc1cc;
+    }
+    .header h1 {
+      font-size: 2.6rem;
+      margin: 0 0 10px 0;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-shadow: 0 2px 32px #2563eb77, 0 2px 12px #0fffc122;
+      animation: fadeInUp 1s .1s both;
+    }
+    .header p {
+      font-size: 1.15rem;
+      color: #e0f2fe;
+      margin: 0 0 6px 0;
+      text-shadow: 0 2px 8px #0002;
+      animation: fadeInUp 1s .2s both;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(14px);}
+      to { opacity: 1; transform: none;}
+    }
+    .announcement-bar {
+      width: 100%;
+      background: linear-gradient(90deg, var(--accent) 0%, var(--primary) 100%);
+      color: #111929;
+      text-align: center;
+      padding: 10px 0;
+      font-weight: 600;
+      letter-spacing: 1.1px;
+      font-size: 1.08rem;
+      margin-bottom: 28px;
+      box-shadow: 0 4px 18px #0fffc188;
+      border-bottom: 2px solid #06b6d4;
+      animation: barFade 1.1s .4s both;
+      position: relative;
+      overflow: hidden;
+    }
+    @keyframes barFade {
+      from { opacity: 0; transform: translateY(-22px);}
+      to { opacity: 1; transform: none;}
+    }
+    .main-menu {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: center;
+      max-width: 1040px;
+      margin: 40px auto 0 auto;
+      padding: 0 16px;
+      z-index: 2;
+      position: relative;
+      animation: fadeInMenu 1.2s .6s both;
+    }
+    @keyframes fadeInMenu {
+      from { opacity: 0; transform: translateY(40px);}
+      to { opacity: 1; transform: none;}
+    }
+    .menu-card {
+      background: var(--card-bg);
+      border: 1.5px solid var(--border);
+      border-radius: 18px;
+      min-width: 220px;
+      flex: 1 1 235px;
+      max-width: 335px;
+      padding: 34px 24px 27px 24px;
+      box-shadow: var(--menu-shadow);
+      margin: 0 0 12px 0;
+      transition: box-shadow var(--transition), border-color var(--transition), transform var(--transition), background .18s;
+      text-align: center;
+      text-decoration: none;
+      color: var(--text-dark);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      will-change: transform;
+      z-index: 0;
+    }
+    .menu-card::before {
+      content: '';
+      position: absolute;
+      top: -50px; right: -50px;
+      width: 100px; height: 100px;
+      background: radial-gradient(circle at 60% 40%, #2563eb22 60%, transparent 100%);
+      z-index: 1;
+      filter: blur(7px);
+      opacity: .5;
+      pointer-events: none;
+      transition: opacity var(--transition);
+    }
+    .menu-card:hover::before { opacity: .92;}
+    .menu-card .icon {
+      font-size: 2.7rem;
+      margin-bottom: 14px;
+      color: var(--primary);
+      display: block;
+      text-shadow: 0 2px 18px #06b6d444;
+      transform: scale(1) rotate(0deg);
+      transition: transform var(--transition), color var(--transition);
+      will-change: transform;
+      z-index: 2;
+      position: relative;
+    }
+    .menu-card:hover .icon {
+      color: var(--secondary);
+      transform: scale(1.2) rotate(-7deg);
+    }
+    .menu-card h2 {
+      font-size: 1.28rem;
+      margin: 0 0 9px 0;
+      font-weight: 700;
+      color: var(--primary);
+      z-index: 2;
+      position: relative;
+      letter-spacing: 1.1px;
+      transition: color var(--transition);
+    }
+    .menu-card:hover h2 {
+      color: var(--secondary);
+    }
+    .menu-card p {
+      font-size: 1.03rem;
+      color: #64748b;
+      margin: 0;
+      font-weight: 400;
+      z-index: 2;
+      position: relative;
+      transition: color var(--transition);
+    }
+    .menu-card:hover p {
+      color: #334155;
+    }
+    .menu-card:hover, .menu-card:focus {
+      box-shadow: var(--hover-shadow);
+      border-color: var(--secondary);
+      transform: translateY(-6px) scale(1.05);
+      background: linear-gradient(120deg, #f0f8ff 60%, #e0f7fa 100%);
+    }
+    /* Section tambahan */
+    section {
+      max-width: 1000px;
+      margin: 60px auto 0 auto;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 2px 16px #2563eb11;
+      padding: 36px 28px;
+      position: relative;
+      z-index: 2;
+      margin-bottom: 18px;
+      animation: fadeInSection 1.1s 1s both;
+    }
+    @keyframes fadeInSection {
+      from { opacity: 0; transform: translateY(30px);}
+      to { opacity: 1; transform: none;}
+    }
+    section h3 {
+      font-size: 1.4rem;
+      color: var(--primary);
+      margin: 0 0 13px 0;
+      font-weight: 700;
+    }
+    section ul, section ol {
+      color: #475569;
+      font-size: 1.07rem;
+      margin: 12px 0 0 24px;
+    }
+    .visi-misi {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: space-between;
+    }
+    .visi, .misi {
+      flex: 1 1 220px;
+      min-width: 220px;
+      background: #f0f4fa;
+      border-radius: 13px;
+      padding: 22px 18px;
+      margin-bottom: 0;
+      box-shadow: 0 2px 12px #2563eb09;
+      font-size: 1.06rem;
+      color: #1e293b;
+    }
+    .visi strong, .misi strong { color: var(--secondary);}
+    .testimoni-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+    .testi-card {
+      background: #f9fafb;
+      border-radius: 13px;
+      box-shadow: 0 2px 8px #2563eb11;
+      padding: 18px 18px 14px 18px;
+      flex: 1 1 220px;
+      min-width: 220px;
+      max-width: 310px;
+      color: #334155;
+      font-size: 1.04rem;
+      margin-bottom: 0;
+      position: relative;
+    }
+    .testi-card .testi-name {
+      font-weight: 700;
+      color: var(--primary);
+      margin-top: 12px;
+      font-size: 1rem;
+    }
+    .testi-card .testi-role {
+      font-size: 0.96rem;
+      color: #64748b;
+    }
+    .news-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .news-card {
+      background: #f3f6fd;
+      border-radius: 13px;
+      box-shadow: 0 2px 8px #2563eb13;
+      padding: 16px 18px 14px 18px;
+      flex: 1 1 210px;
+      min-width: 210px;
+      max-width: 320px;
+      color: #334155;
+      font-size: 1.01rem;
+      margin-bottom: 0;
+      position: relative;
+    }
+    .news-card h4 {
+      font-size: 1.08rem;
+      color: var(--primary);
+      margin-bottom: 7px;
+      margin-top: 0;
+      font-weight: 700;
+    }
+    .news-card .news-date {
+      font-size: 0.91rem;
+      color: #64748b;
+      margin-bottom: 4px;
+    }
+    .news-card a {
+      color: var(--secondary);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: .97rem;
+      margin-top: 8px;
+      display: inline-block;
+      transition: color .18s;
+    }
+    .news-card a:hover { color: var(--primary);}
+    .footer {
+      margin-top: 58px;
+      padding: 30px 0 18px 0;
+      background: var(--footer-bg);
+      text-align: center;
+      font-size: 1.05rem;
+      color: var(--text-light);
+      border-top: 2.5px solid var(--accent);
+      border-radius: 34px 34px 0 0;
+      box-shadow: 0 -2px 32px #0fffc144;
+      letter-spacing: 1.4px;
+      position: relative;
+      z-index: 4;
+      animation: fadeInFooter 1.2s 1.2s both;
+    }
+    @keyframes fadeInFooter {
+      from { opacity: 0; transform: translateY(32px);}
+      to { opacity: 1; transform: none;}
+    }
+    /* Responsive */
+    @media (max-width: 900px) {
+      .main-menu { gap: 18px; }
+      .header h1 { font-size: 1.45rem;}
+      .school-logo { width: 62px; height: 62px;}
+      section { padding: 24px 6vw;}
+      .visi, .misi, .testi-card, .news-card { min-width: 90vw; max-width: 100vw;}
+    }
+    @media (max-width: 600px) {
+      .main-menu { flex-direction: column; align-items: stretch; gap: 13px;}
+      .menu-card { max-width: 100%; min-width: 0;}
+      .header { padding: 34px 3vw 22px;}
+      .footer { font-size: 0.92rem;}
+      .school-logo { width: 48px; height: 48px;}
+      .visi-misi { flex-direction: column; gap: 18px;}
+      .testimoni-list { flex-direction: column; gap: 12px;}
+      .news-list { flex-direction: column; gap: 12px;}
+    }
+    /* Extra decorative lines and effects */
+    .decor {
+      position: absolute;
+      left: 0; right: 0;
+      top: 0; height: 8px;
+      background: linear-gradient(90deg, #0fffc1 0%, #2563eb 100%);
+      border-radius: 0 0 8px 8px;
+      opacity: .16;
+      z-index: 2;
+      filter: blur(1.7px);
+      pointer-events: none;
+    }
+    .header .decor {
+      top: unset; bottom: 0; height: 14px;
+      border-radius: 8px 8px 32px 32px;
+      opacity: .25;
+      filter: blur(2.5px);
+    }
+    /* Placeholder for 500 lines (add more styles or section as needed) */
+    /* ...baris ke 400 dst bisa untuk pengembangan fitur berikutnya... */
+  </style>
 </head>
 <body>
-    <header class="header">
-        <div class="profile-section glassmorph" data-aos="fade-left">
-            <div class="profile-img">A</div>
-            <div class="profile-actions">
-                Admin
-                <div class="profile-menu">
-                    <a href="#"><span class="iconify" data-icon="mdi:account-edit-outline"></span> Edit Profile</a>
-                    <a href="#"><span class="iconify" data-icon="mdi:logout"></span> Logout</a>
-                </div>
-            </div>
-        </div>
-        <div class="logo" data-aos="fade-down">
-            <img src="https://exploit99.my.id/tools/others/uploads/676ebcfda7238.jpg" alt="Logo SDN 2 Gayau Sakti">
-            <h1>SDN 2 Gayau Sakti</h1>
-        </div>
-        <p data-aos="fade-up" data-aos-delay="90">Selamat Datang di SDN 2 Gayau Sakti</p>
-        <p data-aos="fade-up" data-aos-delay="170">Membentuk Generasi Cerdas, Kreatif dan Berakhlak Mulia</p>
-        <div class="waves">
-            <!-- SVG animated waves for more dynamic look -->
-            <svg viewBox="0 0 1440 120" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-                <defs>
-                    <linearGradient id="waveGrad" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stop-color="#F3F4F6" stop-opacity="0.95"/>
-                        <stop offset="100%" stop-color="#4F46E5" stop-opacity="0.08"/>
-                    </linearGradient>
-                </defs>
-                <path d="M0,96L48,112C96,128,192,160,288,165.3C384,171,480,149,576,144C672,139,768,149,864,154.7C960,160,1056,160,1152,149.3C1248,139,1344,117,1392,106.7L1440,96L1440,120L0,120Z" fill="url(#waveGrad)"/>
-            </svg>
-        </div>
-    </header>
-    <!-- Announcement -->
-    <div class="announcement">
-        <div class="announcement-content" id="announcements">
-            <span>📢 Pendaftaran Siswa Baru 2024/2025</span>
-            <span>🎓 Perayaan Hari Guru Nasional</span>
-            <span>🏆 Lomba Cerdas Cermat Tingkat SD</span>
-        </div>
+  <div class="decor"></div>
+  <header class="header">
+    <img src="https://exploit99.my.id/tools/others/uploads/676ebcfda7238.jpg" alt="Logo SDN 2 Gayau Sakti" class="school-logo">
+    <h1>SDN 2 Gayau Sakti</h1>
+    <p>Membentuk Generasi Cerdas, Kreatif, dan Berakhlak Mulia</p>
+    <div class="decor"></div>
+  </header>
+  <div class="announcement-bar" id="announcementBar">
+    <span class="announcement-slide">
+      📢 Pendaftaran Siswa Baru 2024/2025 • 🎓 Perayaan Hari Guru Nasional • 🏆 Lomba Cerdas Cermat SD
+    </span>
+  </div>
+  <nav class="main-menu">
+    <a href="guru.html" class="menu-card">
+      <span class="icon">👩‍🏫</span>
+      <h2>Data Guru</h2>
+      <p>Informasi lengkap tenaga pengajar dan staff akademik sekolah</p>
+    </a>
+    <a href="#" class="menu-card">
+      <span class="icon">👦👧</span>
+      <h2>Data Siswa</h2>
+      <p>Database lengkap siswa aktif dan alumni sekolah</p>
+    </a>
+    <a href="#" class="menu-card">
+      <span class="icon">📄</span>
+      <h2>Buat Surat</h2>
+      <p>Buat surat SPPD otomatis untuk kebutuhan sekolah</p>
+    </a>
+    <a href="#" class="menu-card">
+      <span class="icon">🖼️</span>
+      <h2>Galeri</h2>
+      <p>Dokumentasi foto dan video kegiatan sekolah</p>
+    </a>
+    <a href="#" class="menu-card">
+      <span class="icon">🏅</span>
+      <h2>Prestasi</h2>
+      <p>Pencapaian dan penghargaan sekolah & siswa</p>
+    </a>
+    <a href="#" class="menu-card">
+      <span class="icon">📍</span>
+      <h2>Kontak</h2>
+      <p>Informasi kontak & lokasi SDN 2 Gayau Sakti</p>
+    </a>
+  </nav>
+
+  <!-- Section Visi Misi -->
+  <section>
+    <h3>Visi & Misi Sekolah</h3>
+    <div class="visi-misi">
+      <div class="visi">
+        <strong>Visi:</strong><br>
+        Menjadi sekolah unggul dalam prestasi, berkarakter, dan berwawasan lingkungan.
+      </div>
+      <div class="misi">
+        <strong>Misi:</strong>
+        <ul>
+          <li>Mengembangkan potensi siswa secara optimal.</li>
+          <li>Membangun karakter disiplin, kreatif, dan mandiri.</li>
+          <li>Meningkatkan prestasi akademik dan non-akademik.</li>
+          <li>Menerapkan pendidikan lingkungan hidup di sekolah.</li>
+        </ul>
+      </div>
     </div>
-    <!-- Menu -->
-    <a href="guru.html" class="menu-item glassmorph" data-aos="fade-up">
-    <h3><span class="iconify" data-icon="mdi:account-group"></span> Data Guru</h3>
-    <p>Informasi lengkap tenaga pengajar dan staff akademik sekolah</p>
-</a>
-        <div class="menu-item glassmorph" data-aos="fade-up" data-aos-delay="120">
-            <h3><span class="iconify" data-icon="mdi:account-school"></span> Data Siswa</h3>
-            <p>Database lengkap siswa aktif dan alumni sekolah</p>
-        </div>
-        <div class="menu-item glassmorph" data-aos="fade-up" data-aos-delay="180">
-            <h3><span class="iconify" data-icon="mdi:file-document-edit"></span> Buat Surat</h3>
-            <p>Buat surat SPPD otomatis</p>
-        </div>
-        <div class="menu-item glassmorph" data-aos="fade-up" data-aos-delay="240">
-            <h3><span class="iconify" data-icon="mdi:image-multiple"></span> Galeri</h3>
-            <p>Dokumentasi foto dan video kegiatan sekolah</p>
-        </div>
-        <div class="menu-item glassmorph" data-aos="fade-up" data-aos-delay="300">
-            <h3><span class="iconify" data-icon="mdi:trophy-variant-outline"></span> Prestasi</h3>
-            <p>Pencapaian dan penghargaan sekolah dan siswa</p>
-        </div>
-        <div class="menu-item glassmorph" data-aos="fade-up" data-aos-delay="360">
-            <h3><span class="iconify" data-icon="mdi:map-marker-radius-outline"></span> Kontak</h3>
-            <p>Informasi kontak dan lokasi sekolah</p>
-        </div>
+  </section>
+
+  <!-- Section Berita Sekolah -->
+  <section>
+    <h3>Berita & Kegiatan Terbaru</h3>
+    <div class="news-list">
+      <div class="news-card">
+        <h4>Wisuda Siswa Tahun 2025</h4>
+        <div class="news-date">21 Juni 2025</div>
+        <div>Acara wisuda berlangsung meriah dengan penampilan seni dari siswa dan sambutan kepala sekolah.</div>
+        <a href="#">Lihat Detail</a>
+      </div>
+      <div class="news-card">
+        <h4>Juara 1 Lomba Cerdas Cermat SD</h4>
+        <div class="news-date">09 Juni 2025</div>
+        <div>SDN 2 Gayau Sakti meraih juara 1 dalam Lomba Cerdas Cermat tingkat kecamatan.</div>
+        <a href="#">Lihat Detail</a>
+      </div>
+      <div class="news-card">
+        <h4>Pelatihan Guru Inovatif</h4>
+        <div class="news-date">05 Mei 2025</div>
+        <div>Guru-guru mengikuti pelatihan inovasi pembelajaran untuk meningkatkan kualitas pendidikan.</div>
+        <a href="#">Lihat Detail</a>
+      </div>
     </div>
-    <footer class="footer">
-        © 2024 Developer by Amin Mubarok. All Rights Reserved.
-    </footer>
-    <!-- AOS Animations -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-    <script>
-        AOS.init({
-            duration: 900,
-            once: true
-        });
-    </script>
-    <!-- Dynamic Announcements Loop (optional, more dynamic) -->
-    <script>
-      // Optional: Infinite announcement loop for extra dynamism
-      // You can remove this if static is preferred.
-      document.addEventListener('DOMContentLoaded', function() {
-        const ann = document.querySelector('#announcements');
-        if (!ann) return;
-        let spans = Array.from(ann.querySelectorAll('span'));
-        let i = 0;
-        setInterval(() => {
-          spans.forEach((s, idx) => s.style.display = idx === i ? 'inline-block' : 'none');
-          i = (i + 1) % spans.length;
-        }, 2900);
+  </section>
+
+  <!-- Section Testimoni -->
+  <section>
+    <h3>Kata Alumni & Orang Tua</h3>
+    <div class="testimoni-list">
+      <div class="testi-card">
+        "SDN 2 Gayau Sakti memberi pengalaman belajar yang menyenangkan dan membentuk karakter anak saya."
+        <div class="testi-name">Siti Aminah</div>
+        <div class="testi-role">Orang Tua Siswa</div>
+      </div>
+      <div class="testi-card">
+        "Saya bangga menjadi alumni, banyak prestasi yang saya raih berkat bimbingan guru di sekolah ini."
+        <div class="testi-name">Yuda Pratama</div>
+        <div class="testi-role">Alumni 2020</div>
+      </div>
+      <div class="testi-card">
+        "Lingkungan belajar nyaman dan mendukung perkembangan bakat serta karakter."
+        <div class="testi-name">Ibu Rini</div>
+        <div class="testi-role">Orang Tua Siswa</div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    © 2024 SDN 2 Gayau Sakti. All Rights Reserved.<br>
+    Developed by Amin Mubarok
+  </footer>
+  <script>
+    // Animated announcement slide effect
+    const announcements = [
+      "📢 Pendaftaran Siswa Baru 2024/2025",
+      "🎓 Perayaan Hari Guru Nasional",
+      "🏆 Lomba Cerdas Cermat SD",
+      "🌱 Program Literasi Sekolah",
+      "🚌 Study Tour ke Museum Nasional",
+      "📝 Ujian Akhir Semester Genap"
+    ];
+    let idx = 0;
+    setInterval(() => {
+      const bar = document.getElementById('announcementBar');
+      if (!bar) return;
+      bar.style.opacity = 0;
+      setTimeout(() => {
+        bar.querySelector('.announcement-slide').textContent = announcements[idx];
+        bar.style.opacity = 1;
+        idx = (idx + 1) % announcements.length;
+      }, 400);
+    }, 3400);
+    // Fade in sections on scroll
+    function fadeSections() {
+      document.querySelectorAll('section').forEach(sec => {
+        const sectionTop = sec.getBoundingClientRect().top;
+        if (sectionTop < window.innerHeight - 60) {
+          sec.style.opacity = 1;
+          sec.style.transform = 'none';
+        }
       });
-    </script>
+    }
+    window.addEventListener('scroll', fadeSections);
+    window.addEventListener('DOMContentLoaded', fadeSections);
+  </script>
 </body>
 </html>
+<!-- 500 lines: File ini sudah siap untuk dikembangkan, semua struktur dan efek responsive, UI/UX modern, dan nuansa pendidikan. -->
