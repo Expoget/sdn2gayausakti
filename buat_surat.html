@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Input Surat Perintah Tugas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-container {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="time"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .petugas-container {
+            background-color: #fff;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+
+        .button-group {
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin-right: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .nomor-surat-container {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nomor-surat-input {
+            width: 100px !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Form Input Surat Perintah Tugas</h2>
+        <form action="process.php" method="POST">
+            <!-- Nomor Surat -->
+            <div class="form-group">
+                <label>Nomor Surat:</label>
+                <div class="nomor-surat-container">
+                    <span>421.2/</span>
+                    <input type="text" name="nomor_surat" class="nomor-surat-input" required>
+                    <span>/C.03/D.a.VI.01/2025</span>
+                </div>
+            </div>
+
+            <!-- Tujuan Surat -->
+            <div class="form-group">
+                <label>Tujuan Surat:</label>
+                <input type="text" name="tujuan_surat" required>
+            </div>
+
+            <div class="form-group">
+                <label>Nomor Referensi (opsional):</label>
+                <input type="text" name="nomor_referensi" placeholder="421.2/023/K3SP-SD/D.a.VI.01/2025">
+            </div>
+
+            <!-- Petugas 1 -->
+            <div class="petugas-container">
+                <h3>Petugas 1 (Wajib)</h3>
+                <div class="form-group">
+                    <label>Nama:</label>
+                    <input type="text" name="nama1" required>
+                </div>
+                <div class="form-group">
+                    <label>NIP:</label>
+                    <input type="text" name="nip1" required>
+                </div>
+                <div class="form-group">
+                    <label>Pangkat/Golongan:</label>
+                    <input type="text" name="pangkat1" required>
+                </div>
+            </div>
+
+            <!-- Petugas 2 -->
+            <div class="petugas-container">
+                <h3>Petugas 2 (Opsional)</h3>
+                <div class="form-group">
+                    <label>Nama:</label>
+                    <input type="text" name="nama2">
+                </div>
+                <div class="form-group">
+                    <label>NIP:</label>
+                    <input type="text" name="nip2">
+                </div>
+                <div class="form-group">
+                    <label>Pangkat/Golongan:</label>
+                    <input type="text" name="pangkat2">
+                </div>
+            </div>
+
+            <!-- Tujuan Perjalanan -->
+            <div class="form-group">
+                <label>Tujuan Perjalanan:</label>
+                <input type="text" name="tujuan_perjalanan" required>
+            </div>
+
+            <!-- Waktu dan Tempat -->
+            <div class="form-group">
+                <label>Hari/Tanggal:</label>
+                <input type="date" name="tanggal" required>
+            </div>
+
+            <div class="form-group">
+                <label>Waktu:</label>
+                <input type="time" name="waktu" required>
+            </div>
+
+            <div class="form-group">
+                <label>Tempat:</label>
+                <input type="text" name="tempat" required>
+            </div>
+
+            <!-- Tanggal Surat -->
+            <div class="form-group">
+                <label>Tanggal Pembuatan Surat:</label>
+                <input type="date" name="tanggal_surat" required>
+            </div>
+
+            <!-- Data Perjalanan -->
+            <div class="form-group">
+                <label>Berangkat Dari:</label>
+                <input type="text" name="berangkat_dari" required>
+            </div>
+
+            <div class="form-group">
+                <label>Tanggal Berangkat:</label>
+                <input type="date" name="tanggal_berangkat" required>
+            </div>
+
+            <div class="form-group">
+                <label>Tujuan Tempat:</label>
+                <input type="text" name="tujuan_tempat" required>
+            </div>
+
+            <!-- Tombol Aksi -->
+            <div class="button-group">
+                <button type="submit" class="btn-primary">Generate</button>
+                <button type="button" class="btn-secondary" onclick="previewSurat()">Preview</button>
+                <button type="button" class="btn-secondary" onclick="downloadPDF()">Download PDF</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function previewSurat() {
+            // Fungsi untuk preview surat
+            alert('Preview functionality will be implemented');
+        }
+
+        function downloadPDF() {
+            // Fungsi untuk download PDF
+            alert('Download functionality will be implemented');
+        }
+    </script>
+</body>
+</html>

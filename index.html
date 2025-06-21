@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDN 2 Gayau Sakti</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --primary: #4F46E5;
+            --secondary: #2563EB;
+            --text-dark: #1F2937;
+            --text-light: #6B7280;
+            --background: #F9FAFB;
+            --red: #EF4444;
+            --green: #10B981;
+            --blue: #3B82F6;
+            --purple: #8B5CF6;
+            --orange: #F97316;
+            --teal: #14B8A6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-align: center;
+            padding: 60px 20px 120px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .waves {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23F9FAFB" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,165.3C384,171,480,149,576,128C672,107,768,85,864,96C960,107,1056,149,1152,154.7C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        .profile-section {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 15px;
+            border-radius: 50px;
+            backdrop-filter: blur(5px);
+        }
+
+        .profile-img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .profile-actions {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .profile-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 10px 0;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .profile-actions:hover .profile-menu {
+            display: block;
+        }
+
+        .profile-menu a {
+            display: block;
+            padding: 8px 20px;
+            color: var(--text-dark);
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .profile-menu a:hover {
+            background: #f3f4f6;
+        }
+
+        .logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .logo img {
+            height: 70px;
+            width: 70px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .announcement {
+            background-color: #E0E7FF;
+            padding: 15px 20px;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .menu {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            padding: 50px 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .menu-item {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-item:nth-child(1) { background: linear-gradient(135deg, var(--red), #FCA5A5); }
+        .menu-item:nth-child(2) { background: linear-gradient(135deg, var(--blue), #93C5FD); }
+        .menu-item:nth-child(3) { background: linear-gradient(135deg, var(--green), #86EFAC); }
+        .menu-item:nth-child(4) { background: linear-gradient(135deg, var(--purple), #C4B5FD); }
+        .menu-item:nth-child(5) { background: linear-gradient(135deg, var(--orange), #FDBA74); }
+        .menu-item:nth-child(6) { background: linear-gradient(135deg, var(--teal), #5EEAD4); }
+
+        .menu-item h3 {
+            color: white;
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .menu-item p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .menu-item::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer {
+            background: white;
+            color: var(--text-light);
+            text-align: center;
+            padding: 25px;
+            border-top: 1px solid #E5E7EB;
+            font-size: 0.9rem;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        @media (max-width: 768px) {
+            .logo h1 { font-size: 1.8rem; }
+            .logo img { height: 50px; width: 50px; }
+            .menu { grid-template-columns: 1fr; padding: 30px 15px; }
+            .profile-section { position: relative; top: 0; right: 0; margin: 20px auto; width: fit-content; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="profile-section">
+            <div class="profile-img">A</div>
+            <div class="profile-actions">
+                Admin
+                <div class="profile-menu">
+                    <a href="#">Edit Profile</a>
+                    <a href="#">Logout</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="logo" data-aos="fade-down">
+            <img src="https://exploit99.my.id/tools/others/uploads/676ebcfda7238.jpg" alt="Logo SDN 2 Gayau Sakti">
+            <h1>SDN 2 Gayau Sakti</h1>
+        </div>
+        <p data-aos="fade-up" data-aos-delay="100">Selamat Datang di SDN 2 Gayau Sakti</p>
+        <p data-aos="fade-up" data-aos-delay="200">Membentuk Generasi Cerdas, Kreatif dan Berakhlak Mulia</p>
+        <div class="waves"></div>
+    </header>
+
+    <div class="announcement">
+        <div class="announcement-content">
+            <span>📢 Pendaftaran Siswa Baru 2024/2025</span>
+            <span>🎓 Perayaan Hari Guru Nasional</span>
+            <span>🏆 Lomba Cerdas Cermat Tingkat SD</span>
+        </div>
+    </div>
+
+    <div class="menu">
+        <div class="menu-item" data-aos="fade-up">
+            <h3>Data Guru</h3>
+            <p>Informasi lengkap tenaga pengajar dan staff akademik sekolah</p>
+        </div>
+        <div class="menu-item" data-aos="fade-up" data-aos-delay="100">
+            <h3>Data Siswa</h3>
+            <p>Database lengkap siswa aktif dan alumni sekolah</p>
+        </div>
+        <div class="menu-item" data-aos="fade-up" data-aos-delay="200">
+            <h3>buat surat</h3>
+            <p>Buat surat SPPD otomatis</p>
+        </div>
+        <div class="menu-item" data-aos="fade-up" data-aos-delay="300">
+            <h3>Galeri</h3>
+            <p>Dokumentasi foto dan video kegiatan sekolah</p>
+        </div>
+        <div class="menu-item" data-aos="fade-up" data-aos-delay="400">
+            <h3>Prestasi</h3>
+            <p>Pencapaian dan penghargaan sekolah dan siswa</p>
+        </div>
+        <div class="menu-item" data-aos="fade-up" data-aos-delay="500">
+            <h3>Kontak</h3>
+            <p>Informasi kontak dan lokasi sekolah</p>
+        </div>
+    </div>
+
+    <footer class="footer">
+        © 2024 Developer by Amin Mubarok. All Rights Reserved.
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+    </script>
+</body>
+</html>

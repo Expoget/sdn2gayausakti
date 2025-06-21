@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Guru - SDN 2 Gayau Sakti</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #add8e6; /* Biru muda */
+        }
+        header {
+            background-color: #00509e;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 1.8em;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        main {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        button {
+            background-color: #00509e;
+            color: white;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 15px;
+        }
+        button:hover {
+            background-color: #003f7d;
+        }
+        form {
+            display: none;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        form label {
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
+            font-weight: bold;
+        }
+        form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .guru-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: white;
+            border-radius: 10px;
+            padding: 10px 20px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .guru-info {
+            flex: 1;
+        }
+        .guru-info h2 {
+            font-size: 1em;
+            color: #00509e;
+            margin: 0;
+        }
+        .guru-info p {
+            font-size: 0.9em;
+            color: #333;
+            margin: 5px 0;
+        }
+        .guru-actions button {
+            margin-left: 10px;
+            background-color: #ff5722;
+            color: white;
+            font-size: 0.8em;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .guru-actions button.edit {
+            background-color: #4caf50;
+        }
+        .guru-actions button:hover {
+            opacity: 0.9;
+        }
+        .notification {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header>Daftar Guru - SDN 2 Gayau Sakti</header>
+    <main>
+        <!-- Notifikasi -->
+        <div id="notification" class="notification">Data Guru Berhasil Ditambahkan</div>
+
+        <!-- Tombol Show/Hide Form -->
+        <button id="toggleFormButton">Tampilkan Form Input Guru</button>
+
+        <!-- Form Input -->
+        <form id="guruForm">
+            <label for="nama">Nama Guru</label>
+            <input type="text" id="nama" placeholder="Masukkan nama guru" required>
+            
+            <label for="nip">NIP</label>
+            <input type="text" id="nip" placeholder="Masukkan NIP" required>
+            
+            <label for="jabatan">Jabatan</label>
+            <input type="text" id="jabatan" placeholder="Masukkan jabatan" required>
+            
+            <button type="submit">Tambahkan Guru</button>
+        </form>
+
+        <!-- Daftar Guru -->
+        <div id="guruList">
+            <!-- Data Dummy -->
+            <div class="guru-card">
+                <div class="guru-info">
+                    <h2>Nama: Budi Santoso</h2>
+                    <p><strong>NIP:</strong> 1987654321</p>
+                    <p><strong>Jabatan:</strong> Kepala Sekolah</p>
+                </div>
+                <div class="guru-actions">
+                    <button class="edit">Edit</button>
+                    <button class="delete">Hapus</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const toggleFormButton = document.getElementById('toggleFormButton');
+        const guruForm = document.getElementById('guruForm');
+        const guruList = document.getElementById('guruList');
+        const notification = document.getElementById('notification');
+
+        // Toggle Form Input Guru
+        toggleFormButton.addEventListener('click', () => {
+            if (guruForm.style.display === 'none' || guruForm.style.display === '') {
+                guruForm.style.display = 'block';
+                toggleFormButton.textContent = 'Sembunyikan Form Input Guru';
+            } else {
+                guruForm.style.display = 'none';
+                toggleFormButton.textContent = 'Tampilkan Form Input Guru';
+            }
+        });
+
+        // Tambahkan Guru
+        guruForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const nama = document.getElementById('nama').value;
+            const nip = document.getElementById('nip').value;
+            const jabatan = document.getElementById('jabatan').value;
+
+            const guruCard = document.createElement('div');
+            guruCard.className = 'guru-card';
+            guruCard.innerHTML = `
+                <div class="guru-info">
+                    <h2>Nama: ${nama}</h2>
+                    <p><strong>NIP:</strong> ${nip}</p>
+                    <p><strong>Jabatan:</strong> ${jabatan}</p>
+                </div>
+                <div class="guru-actions">
+                    <button class="edit">Edit</button>
+                    <button class="delete">Hapus</button>
+                </div>
+            `;
+            guruList.appendChild(guruCard);
+
+            showNotification();
+            guruForm.reset();
+        });
+
+        // Notifikasi
+        const showNotification = () => {
+            notification.style.display = 'block';
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        };
+
+        // Fitur Edit & Hapus
+        guruList.addEventListener('click', (e) => {
+            if (e.target.classList.contains('delete')) {
+                e.target.closest('.guru-card').remove();
+            } else if (e.target.classList.contains('edit')) {
+                const card = e.target.closest('.guru-card');
+                const nama = card.querySelector('h2').textContent.replace('Nama: ', '');
+                const nip = card.querySelector('p:nth-child(2)').textContent.replace('NIP: ', '');
+                const jabatan = card.querySelector('p:nth-child(3)').textContent.replace('Jabatan: ', '');
+
+                document.getElementById('nama').value = nama;
+                document.getElementById('nip').value = nip;
+                document.getElementById('jabatan').value = jabatan;
+
+                guruForm.style.display = 'block';
+                toggleFormButton.textContent = 'Sembunyikan Form Input Guru';
+                card.remove();
+            }
+        });
+    </script>
+</body>
+</html>
