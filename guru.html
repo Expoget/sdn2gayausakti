@@ -1,117 +1,209 @@
+```html name=guru.html
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar Guru - SDN 2 Gayau Sakti</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #2065d1;
+            --primary-dark: #174ea6;
+            --accent: #48d1cc;
+            --bg: #f4f8fb;
+            --white: #fff;
+            --grey: #e0e7ef;
+            --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+            --border-radius: 16px;
+            --transition: 0.2s cubic-bezier(.4,0,.2,1);
+        }
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Montserrat', 'Roboto', sans-serif;
+            background: var(--bg);
             margin: 0;
             padding: 0;
-            background-color: #add8e6; /* Biru muda */
+            min-height: 100vh;
         }
         header {
-            background-color: #00509e;
-            color: white;
-            padding: 15px;
+            background: linear-gradient(90deg, var(--primary-dark) 0%, var(--primary) 100%);
+            color: var(--white);
+            padding: 36px 0 24px 0;
             text-align: center;
-            font-size: 1.8em;
-            font-weight: bold;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-size: 2.3em;
+            font-weight: 600;
+            letter-spacing: 1px;
+            box-shadow: var(--shadow);
+            border-bottom-left-radius: var(--border-radius);
+            border-bottom-right-radius: var(--border-radius);
         }
         main {
-            padding: 20px;
-            max-width: 800px;
+            padding: 32px 8px;
+            max-width: 900px;
             margin: 0 auto;
         }
-        button {
-            background-color: #00509e;
-            color: white;
-            font-weight: bold;
-            padding: 10px 20px;
+        #toggleFormButton {
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            color: var(--white);
+            font-weight: 600;
+            font-size: 1.05em;
+            padding: 14px 32px;
             border: none;
-            border-radius: 5px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
             cursor: pointer;
-            margin-bottom: 15px;
+            margin-bottom: 32px;
+            transition: background var(--transition), transform var(--transition);
         }
-        button:hover {
-            background-color: #003f7d;
+        #toggleFormButton:hover {
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transform: translateY(-2px) scale(1.03);
         }
         form {
             display: none;
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
+            background: var(--white);
+            padding: 32px 24px 24px 24px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 32px;
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px);}
+            to   { opacity: 1; transform: none; }
         }
         form label {
             display: block;
-            margin-bottom: 10px;
-            color: #333;
-            font-weight: bold;
+            margin-bottom: 7px;
+            color: #222;
+            font-weight: 500;
+            font-size: 1.05em;
         }
         form input {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            padding: 12px 16px;
+            margin-bottom: 22px;
+            border: 1.5px solid var(--grey);
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.2s;
+            background: #f8fafc;
+        }
+        form input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        form button[type="submit"] {
+            background: var(--primary);
+            color: var(--white);
+            font-weight: 600;
+            padding: 12px 36px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background var(--transition), transform var(--transition);
+            box-shadow: var(--shadow);
+        }
+        form button[type="submit"]:hover {
+            background: var(--accent);
+            color: var(--primary-dark);
+            transform: translateY(-2px) scale(1.03);
+        }
+        #guruList {
+            margin-top: 10px;
         }
         .guru-card {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            background-color: white;
-            border-radius: 10px;
-            padding: 10px 20px;
-            margin-bottom: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            align-items: flex-start;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 24px 32px;
+            margin-bottom: 18px;
+            box-shadow: var(--shadow), 0 1.5px 0 rgba(32,101,209,0.04);
+            transition: transform .15s, box-shadow .15s;
+            position: relative;
         }
-        .guru-info {
-            flex: 1;
+        .guru-card:hover {
+            transform: translateY(-3px) scale(1.01);
+            box-shadow: 0 10px 48px 0 rgba(32, 101, 209, 0.08);
         }
         .guru-info h2 {
-            font-size: 1em;
-            color: #00509e;
-            margin: 0;
+            font-size: 1.15em;
+            color: var(--primary-dark);
+            margin: 0 0 7px 0;
+            font-weight: 600;
         }
         .guru-info p {
-            font-size: 0.9em;
-            color: #333;
-            margin: 5px 0;
+            font-size: 1em;
+            color: #222;
+            margin: 3px 0 0 0;
+        }
+        .guru-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            min-width: 90px;
         }
         .guru-actions button {
-            margin-left: 10px;
-            background-color: #ff5722;
-            color: white;
-            font-size: 0.8em;
-            padding: 5px 10px;
+            background: none;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
+            font-size: 0.96em;
+            font-weight: 500;
+            padding: 9px 0;
             cursor: pointer;
+            transition: background .18s, color .18s;
         }
         .guru-actions button.edit {
-            background-color: #4caf50;
+            background: var(--accent);
+            color: var(--primary-dark);
         }
-        .guru-actions button:hover {
-            opacity: 0.9;
+        .guru-actions button.edit:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+        .guru-actions button.delete {
+            background: #f44336;
+            color: var(--white);
+        }
+        .guru-actions button.delete:hover {
+            background: #b71c1c;
         }
         .notification {
-            background-color: #4caf50;
-            color: white;
-            padding: 10px;
+            background: linear-gradient(90deg, var(--primary-dark), var(--primary));
+            color: var(--white);
+            padding: 14px 0;
             text-align: center;
-            border-radius: 5px;
-            margin-bottom: 15px;
+            border-radius: 8px;
+            margin-bottom: 22px;
+            font-weight: 600;
+            font-size: 1.05em;
             display: none;
+            box-shadow: var(--shadow);
+            letter-spacing: 1px;
+            animation: fadeIn 0.5s;
+        }
+        @media (max-width: 600px) {
+            main {
+                padding: 12px 2px;
+            }
+            .guru-card {
+                flex-direction: column;
+                gap: 18px;
+                padding: 18px;
+            }
+            .guru-actions {
+                flex-direction: row;
+                gap: 12px;
+                min-width: 0;
+            }
         }
     </style>
 </head>
 <body>
-    <header>Daftar Guru - SDN 2 Gayau Sakti</header>
+    <header>Daftar Guru<br><span style="font-size:0.6em;font-weight:400;letter-spacing:0.5px;">SDN 2 Gayau Sakti</span></header>
     <main>
         <!-- Notifikasi -->
         <div id="notification" class="notification">Data Guru Berhasil Ditambahkan</div>
@@ -122,14 +214,14 @@
         <!-- Form Input -->
         <form id="guruForm">
             <label for="nama">Nama Guru</label>
-            <input type="text" id="nama" placeholder="Masukkan nama guru" required>
-            
+            <input type="text" id="nama" placeholder="Masukkan nama guru" required autocomplete="off">
+
             <label for="nip">NIP</label>
-            <input type="text" id="nip" placeholder="Masukkan NIP" required>
-            
+            <input type="text" id="nip" placeholder="Masukkan NIP" required autocomplete="off">
+
             <label for="jabatan">Jabatan</label>
-            <input type="text" id="jabatan" placeholder="Masukkan jabatan" required>
-            
+            <input type="text" id="jabatan" placeholder="Masukkan jabatan" required autocomplete="off">
+
             <button type="submit">Tambahkan Guru</button>
         </form>
 
@@ -155,6 +247,7 @@
         const guruForm = document.getElementById('guruForm');
         const guruList = document.getElementById('guruList');
         const notification = document.getElementById('notification');
+        let editMode = false, editCard = null;
 
         // Toggle Form Input Guru
         toggleFormButton.addEventListener('click', () => {
@@ -164,52 +257,73 @@
             } else {
                 guruForm.style.display = 'none';
                 toggleFormButton.textContent = 'Tampilkan Form Input Guru';
+                resetForm();
             }
         });
 
-        // Tambahkan Guru
+        // Tambahkan/Update Guru
         guruForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            const nama = document.getElementById('nama').value;
-            const nip = document.getElementById('nip').value;
-            const jabatan = document.getElementById('jabatan').value;
+            const nama = document.getElementById('nama').value.trim();
+            const nip = document.getElementById('nip').value.trim();
+            const jabatan = document.getElementById('jabatan').value.trim();
 
-            const guruCard = document.createElement('div');
-            guruCard.className = 'guru-card';
-            guruCard.innerHTML = `
-                <div class="guru-info">
-                    <h2>Nama: ${nama}</h2>
-                    <p><strong>NIP:</strong> ${nip}</p>
-                    <p><strong>Jabatan:</strong> ${jabatan}</p>
-                </div>
-                <div class="guru-actions">
-                    <button class="edit">Edit</button>
-                    <button class="delete">Hapus</button>
-                </div>
-            `;
-            guruList.appendChild(guruCard);
-
-            showNotification();
-            guruForm.reset();
+            if (editMode && editCard) {
+                // Update
+                editCard.querySelector('h2').textContent = `Nama: ${nama}`;
+                editCard.querySelector('p:nth-child(2)').innerHTML = `<strong>NIP:</strong> ${nip}`;
+                editCard.querySelector('p:nth-child(3)').innerHTML = `<strong>Jabatan:</strong> ${jabatan}`;
+                showNotification('Data Guru Berhasil Diperbarui');
+                resetForm();
+            } else {
+                // Tambah baru
+                const guruCard = document.createElement('div');
+                guruCard.className = 'guru-card';
+                guruCard.innerHTML = `
+                    <div class="guru-info">
+                        <h2>Nama: ${nama}</h2>
+                        <p><strong>NIP:</strong> ${nip}</p>
+                        <p><strong>Jabatan:</strong> ${jabatan}</p>
+                    </div>
+                    <div class="guru-actions">
+                        <button class="edit">Edit</button>
+                        <button class="delete">Hapus</button>
+                    </div>
+                `;
+                guruList.appendChild(guruCard);
+                showNotification('Data Guru Berhasil Ditambahkan');
+                guruForm.reset();
+            }
         });
 
         // Notifikasi
-        const showNotification = () => {
+        const showNotification = (message = 'Data Guru Berhasil Ditambahkan') => {
+            notification.textContent = message;
             notification.style.display = 'block';
             setTimeout(() => {
                 notification.style.display = 'none';
-            }, 3000);
+            }, 2200);
+        };
+
+        const resetForm = () => {
+            guruForm.reset();
+            editMode = false;
+            editCard = null;
         };
 
         // Fitur Edit & Hapus
         guruList.addEventListener('click', (e) => {
             if (e.target.classList.contains('delete')) {
-                e.target.closest('.guru-card').remove();
+                if (confirm('Yakin ingin menghapus data guru ini?')) {
+                    e.target.closest('.guru-card').remove();
+                    showNotification('Data Guru Berhasil Dihapus');
+                    resetForm();
+                }
             } else if (e.target.classList.contains('edit')) {
                 const card = e.target.closest('.guru-card');
-                const nama = card.querySelector('h2').textContent.replace('Nama: ', '');
-                const nip = card.querySelector('p:nth-child(2)').textContent.replace('NIP: ', '');
-                const jabatan = card.querySelector('p:nth-child(3)').textContent.replace('Jabatan: ', '');
+                const nama = card.querySelector('h2').textContent.replace('Nama: ', '').trim();
+                const nip = card.querySelector('p:nth-child(2)').textContent.replace('NIP:', '').trim();
+                const jabatan = card.querySelector('p:nth-child(3)').textContent.replace('Jabatan:', '').trim();
 
                 document.getElementById('nama').value = nama;
                 document.getElementById('nip').value = nip;
@@ -217,9 +331,12 @@
 
                 guruForm.style.display = 'block';
                 toggleFormButton.textContent = 'Sembunyikan Form Input Guru';
-                card.remove();
+                editMode = true;
+                editCard = card;
+                window.scrollTo({ top: guruForm.offsetTop - 60, behavior: 'smooth' });
             }
         });
     </script>
 </body>
 </html>
+```
